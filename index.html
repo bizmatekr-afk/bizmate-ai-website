@@ -257,6 +257,68 @@
             .contact-layout { grid-template-columns: 1fr; }
             .contact-chips { flex-wrap: wrap; }
         }
+        /* Bento gallery layout inspired by the requested component */
+        .portfolio-gallery { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; grid-auto-rows: 150px; gap: 12px; padding: 22px; border-radius: 24px; background: #151515; box-shadow: 0 20px 50px rgba(35,20,18,.18); }
+        .portfolio-gallery .gallery-card { display: block; width: auto; height: auto; min-height: 0; margin: 0; grid-column: span 1; grid-row: span 1; border: 0; border-radius: 15px; background: #282828; box-shadow: none; break-inside: auto; }
+        .portfolio-gallery .gallery-card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        .portfolio-gallery .gallery-card:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+        .portfolio-gallery .gallery-card:nth-child(3) { grid-column: span 1; grid-row: span 2; }
+        .portfolio-gallery .gallery-card:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+        .portfolio-gallery .gallery-card:nth-child(n+5) { grid-column: span 1; grid-row: span 1; }
+        .portfolio-gallery .gallery-card img { width: 100%; height: 100%; object-fit: cover; background: #282828; }
+        .portfolio-gallery .gallery-overlay { padding: .8rem; }
+        .portfolio-gallery .gallery-caption { grid-column: 1 / -1; color: rgba(255,255,255,.65); padding-top: .35rem; }
+        @media (max-width: 768px) {
+            .portfolio-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 125px; padding: 12px; gap: 8px; }
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { grid-column: span 1; grid-row: span 1; }
+            .portfolio-gallery .gallery-card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+            .portfolio-gallery .gallery-card:nth-child(3) { grid-column: span 1; grid-row: span 2; }
+            .portfolio-gallery .gallery-caption { grid-column: 1 / -1; }
+        }
+        /* Final gallery: horizontal carousel, no dark panel, no cropped thumbnails */
+        .portfolio-gallery { display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 16px; overflow-x: auto; overflow-y: hidden; padding: 8px 4px 18px; background: transparent; border-radius: 0; box-shadow: none; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+        .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { flex: 0 0 280px; width: 280px; height: auto; min-height: 0; margin: 0; grid-column: auto; grid-row: auto; border: 1px solid var(--border-color); border-radius: 18px; background: #fff; box-shadow: 0 12px 28px rgba(80,42,35,.12); scroll-snap-align: start; }
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { display: block; width: 100%; height: auto; max-height: none; aspect-ratio: auto; object-fit: contain; background: #f8f3f0; }
+        .portfolio-gallery .gallery-overlay { opacity: 1; }
+        .portfolio-gallery .gallery-caption { flex: 0 0 auto; width: auto; align-self: center; color: var(--text-secondary); padding: 0 14px; white-space: nowrap; }
+        @media (max-width: 768px) {
+            .portfolio-gallery { gap: 12px; padding-right: 12px; }
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { flex-basis: 78vw; width: 78vw; }
+        }
+        /* Uniform two-up carousel */
+        .portfolio-gallery { gap: 8px; padding-left: 0; padding-right: 0; }
+        .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { flex: 0 0 calc(50% - 4px); width: calc(50% - 4px); height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .portfolio-gallery .gallery-card { isolation: isolate; background: var(--gallery-bg) center / cover no-repeat, #f8f3f0; }
+        .portfolio-gallery .gallery-card::before { content: ""; position: absolute; inset: -18px; z-index: -1; background-image: var(--gallery-bg); background-size: cover; background-position: center; filter: blur(18px); opacity: .34; transform: scale(1.08); }
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; }
+        .portfolio-gallery .gallery-caption { display: none; }
+        @media (max-width: 768px) {
+            .portfolio-gallery { gap: 6px; }
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { flex-basis: calc(50% - 3px); width: calc(50% - 3px); height: 300px; }
+        }
+        /* Natural-height cards: two images per view without artificial empty space */
+        .portfolio-gallery { align-items: flex-start; }
+        .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { height: auto; align-self: flex-start; display: block; }
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { height: auto; max-height: none; }
+        @media (max-width: 768px) {
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { height: auto; }
+        }
+        /* Consistent card format while preserving the complete image */
+        .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { height: auto; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; }
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { width: 100%; height: 100%; object-fit: contain; }
+        @media (max-width: 768px) {
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { aspect-ratio: 4 / 3; height: auto; }
+        }
+        /* Fill thumbnail cards completely; clicking still opens the uncropped original. */
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+        /* Final: same height, natural width. Full images with no letterboxing or cropping. */
+        .portfolio-gallery { align-items: flex-start; gap: 8px; }
+        .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { flex: 0 0 auto; width: auto; height: 300px; aspect-ratio: auto; display: flex; border-radius: 16px; background: transparent; }
+        .portfolio-gallery .gallery-card img, .portfolio-gallery .gallery-card video { width: auto !important; height: 100% !important; max-width: none; object-fit: contain !important; }
+        .portfolio-gallery .gallery-card::before { display: none; }
+        @media (max-width: 768px) {
+            .portfolio-gallery .gallery-card, .portfolio-gallery .gallery-card:nth-child(n) { height: 220px; }
+        }
     </style>
 </head>
 <body>
@@ -323,6 +385,8 @@
                 <span class="section-tag">PORTFOLIO</span>
                 <h2 class="section-h2">최근 프로젝트</h2>
             </div>
+            <!-- 포트폴리오 추가 방법: 아래 gallery-card를 복사한 뒤 data-title, data-desc, data-url을 바꾸세요.
+                 이미지: data-type="image" / 영상: data-type="video" + MP4 파일 경로 -->
             <div class="portfolio-gallery reveal" id="portfolioGallery" aria-label="비즈메이트 AI 포트폴리오 갤러리">
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="행복마트 추석 프로모션" data-desc="시선을 끄는 시즌 프로모션 콘텐츠" data-url="assets/happy-mart.png"><img src="assets/happy-mart.png" alt="행복마트 추석 프로모션 디자인" loading="lazy"><div class="gallery-overlay"><strong>행복마트 추석 프로모션</strong><span>시즌 콘텐츠 디자인</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="mude 마스카라 광고" data-desc="제품의 매력을 살린 뷰티 콘텐츠" data-url="assets/mude-mascara.png"><img src="assets/mude-mascara.png" alt="mude 마스카라 광고 디자인" loading="lazy"><div class="gallery-overlay"><strong>mude 마스카라 광고</strong><span>제품 콘텐츠 디자인</span></div></article>
@@ -330,7 +394,6 @@
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="봄 여행 국내 여행 콘텐츠" data-desc="봄 여행지를 소개하는 정보형 포스터" data-url="assets/spring-travel.png"><img src="assets/spring-travel.png" alt="봄 여행 국내 여행 포스터" loading="lazy"><div class="gallery-overlay"><strong>봄 여행 국내 여행 콘텐츠</strong><span>여행 정보형 포스터</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="오늘한상 한우 불고기" data-desc="따뜻한 분위기의 외식 브랜드 메뉴 포스터" data-url="assets/korean-bulgogi.png"><img src="assets/korean-bulgogi.png" alt="오늘한상 한우 불고기 포스터" loading="lazy"><div class="gallery-overlay"><strong>오늘한상 한우 불고기</strong><span>외식 브랜드 메뉴 콘텐츠</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="뷰티 브랜드 광고 모델" data-desc="제품과 모델을 함께 보여주는 브랜드 이미지" data-url="assets/beauty-model.png"><img src="assets/beauty-model.png" alt="뷰티 브랜드 광고 모델 이미지" loading="lazy"><div class="gallery-overlay"><strong>뷰티 브랜드 광고 모델</strong><span>브랜드 이미지 콘텐츠</span></div></article>
-                <article class="gallery-card" tabindex="0" data-type="image" data-title="Black Friday Sale" data-desc="강렬한 블랙·레드 컬러의 프로모션 배너" data-url="assets/black-friday.png"><img src="assets/black-friday.png" alt="Black Friday 프로모션 배너" loading="lazy"><div class="gallery-overlay"><strong>Black Friday Sale</strong><span>프로모션 배너 디자인</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="뷰티 모델 클로즈업" data-desc="부드러운 핑크 톤의 뷰티 광고 이미지" data-url="assets/beauty-closeup.png"><img src="assets/beauty-closeup.png" alt="뷰티 모델 클로즈업 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>뷰티 모델 클로즈업</strong><span>광고 모델 콘텐츠</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="향수 브랜드 이미지" data-desc="제품을 중심으로 구성한 감성 광고 비주얼" data-url="assets/beauty-product-scene.png"><img src="assets/beauty-product-scene.png" alt="향수 브랜드 제품 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>향수 브랜드 이미지</strong><span>제품 광고 비주얼</span></div></article>
                 <article class="gallery-card" tabindex="0" data-type="image" data-title="스킨케어 제품 콘텐츠" data-desc="깨끗하고 따뜻한 톤의 제품 연출 이미지" data-url="assets/skincare-products.png"><img src="assets/skincare-products.png" alt="스킨케어 제품 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>스킨케어 제품 콘텐츠</strong><span>제품 연출 이미지</span></div></article>
@@ -396,8 +459,11 @@
     const galleryMedia = document.getElementById('galleryModalMedia');
     const galleryTitle = document.getElementById('galleryModalTitle');
     const galleryDesc = document.getElementById('galleryModalDesc');
+    document.querySelectorAll('#portfolioGallery img').forEach(img => { img.loading = 'eager'; });
     const closeGallery = () => { galleryModal.classList.remove('is-open'); galleryMedia.innerHTML = ''; document.body.style.overflow = ''; };
     document.querySelectorAll('.gallery-card').forEach(card => {
+        const preview = card.querySelector('img');
+        if (preview) card.style.setProperty('--gallery-bg', `url("${preview.src}")`);
         const openGallery = () => {
             const type = card.dataset.type, url = card.dataset.url;
             galleryTitle.textContent = card.dataset.title || '';
