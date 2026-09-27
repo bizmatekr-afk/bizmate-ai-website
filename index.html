@@ -121,6 +121,14 @@
         .card-icon { width: 44px; height: 44px; background: rgba(var(--primary-rgb),0.08); border-radius: var(--radius-icon); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 1.25rem; }
         .card-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
         .card-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
+        .service-card { cursor: pointer; }
+        .service-card:focus-visible { outline: 3px solid rgba(var(--primary-rgb),0.45); outline-offset: 3px; }
+        .service-details { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: none; }
+        .service-card.is-open .service-details { display: block; animation: serviceReveal .25s ease-out; }
+        .service-price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: .5rem; }
+        .service-meta { display: grid; gap: .35rem; color: var(--text-secondary); font-size: .82rem; line-height: 1.5; }
+        .service-hint { margin-top: .8rem; color: var(--primary); font-size: .76rem; font-weight: 700; }
+        @keyframes serviceReveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Stats */
         .stats-bar { padding: calc(var(--section-gap) * .72) 0; border-top: 1px solid var(--border-color); }
@@ -131,6 +139,32 @@
         /* Portfolio */
         .portfolio { padding: 5rem 0; border-top: 1px solid var(--border-color); }
         .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .portfolio-gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 92px; grid-auto-flow: dense; gap: 12px; }
+        .gallery-card { position: relative; min-height: 0; grid-column: span 2; grid-row: span 2; border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid var(--border-color); box-shadow: 0 12px 28px rgba(80,42,35,.12); cursor: grab; transition: transform .25s ease, box-shadow .25s ease; }
+        .gallery-card:active { cursor: grabbing; }
+        .gallery-card:hover { transform: scale(1.02); box-shadow: 0 18px 38px rgba(80,42,35,.2); z-index: 2; }
+        .gallery-card img, .gallery-card video { width: 100%; height: 100%; object-fit: cover; display: block; background: #f8f3f0; }
+        .gallery-card:nth-child(1) { grid-column: span 1; grid-row: span 3; }
+        .gallery-card:nth-child(2) { grid-column: span 2; grid-row: span 2; }
+        .gallery-card:nth-child(3) { grid-column: span 1; grid-row: span 3; }
+        .gallery-card:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+        /* 원본 비율을 유지하는 매거진식 갤러리: 이미지가 잘리지 않고 빈 칸도 최소화된다. */
+        .portfolio-gallery { display: block; columns: 4 220px; column-gap: 12px; }
+        .gallery-card { display: inline-block; width: 100%; height: auto; min-height: 0; margin: 0 0 12px; break-inside: avoid; vertical-align: top; }
+        .gallery-card img, .gallery-card video { height: auto; min-height: 0; aspect-ratio: auto; object-fit: contain; background: #f8f3f0; }
+        .gallery-caption { display: block; width: 100%; clear: both; }
+        .gallery-overlay { position: absolute; inset: auto 0 0; padding: 1rem; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.78)); opacity: 0; transition: opacity .2s; }
+        .gallery-card:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay strong { display: block; font-size: .95rem; }
+        .gallery-overlay span { font-size: .75rem; opacity: .85; }
+        .gallery-caption { grid-column: 1 / -1; text-align: center; color: var(--text-secondary); font-size: .8rem; padding-top: .25rem; }
+        .gallery-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 1.5rem; background: rgba(30,20,18,.72); backdrop-filter: blur(10px); }
+        .gallery-modal.is-open { display: flex; }
+        .gallery-modal-content { position: relative; width: min(900px, 95vw); max-height: 90vh; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 25px 80px rgba(0,0,0,.35); }
+        .gallery-modal-content img, .gallery-modal-content video { display: block; width: 100%; max-height: 78vh; object-fit: contain; background: #f7f2ef; }
+        .gallery-modal-info { padding: 1rem 1.25rem; }
+        .gallery-modal-info h3 { margin-bottom: .25rem; }
+        .gallery-close { position: absolute; right: .75rem; top: .75rem; border: 0; border-radius: 50%; width: 34px; height: 34px; background: rgba(255,255,255,.9); font-size: 1.25rem; cursor: pointer; z-index: 2; }
         .pf-card { border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s; background: var(--bg-card); }
         .pf-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
         .pf-thumb { aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; background: var(--bg-card); overflow: hidden; }
@@ -217,6 +251,8 @@
             .nav-links { display: none; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
             .portfolio-grid, .test-grid { grid-template-columns: 1fr; }
+            .portfolio-gallery { columns: 2 150px; }
+            .gallery-card, .gallery-card:nth-child(1), .gallery-card:nth-child(2), .gallery-card:nth-child(3), .gallery-card:nth-child(4) { grid-column: auto; grid-row: auto; }
             .team-grid { grid-template-columns: repeat(2, 1fr); }
             .contact-layout { grid-template-columns: 1fr; }
             .contact-chips { flex-wrap: wrap; }
@@ -258,20 +294,23 @@
                 <h2 class="section-h2">우리가 제공하는 핵심 가치</h2>
             </div>
             <div class="grid">
-                <div class="card reveal">
+                <div class="card service-card reveal" tabindex="0" role="button" aria-expanded="false">
                     <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
                     <h3 class="card-title">SNS 운영 대행</h3>
                     <p class="card-desc">업무를 자동화하고 효율을 높이는 맞춤형 AI 에이전트를 구축합니다.</p>
+                    <div class="service-details"><div class="service-price">Basic 월 400만원 · Standard 월 500만원 · Premium 월 1,000만원</div><div class="service-meta"><span>• 숏폼·이미지 콘텐츠 제작 및 채널 운영</span><span>• 경쟁사 분석, 월별 성과 보고서, 콘텐츠 컨설팅</span><span>• 장기 계약 시 20% 할인</span></div></div><div class="service-hint">카드를 클릭해 가격 보기</div>
                 </div>
-                <div class="card reveal">
+                <div class="card service-card reveal" tabindex="0" role="button" aria-expanded="false">
                     <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
                     <h3 class="card-title">카드뉴스 콘텐츠</h3>
                     <p class="card-desc">브랜드의 가치를 돋보이게 하는 세련되고 완성도 높은 웹사이트를 제작합니다.</p>
+                    <div class="service-details"><div class="service-price">Standard 5,000원 · Deluxe 19,000원 · Premium 29,000원</div><div class="service-meta"><span>• 이미지 1장 기준 콘텐츠 디자인</span><span>• 제공 원고·이미지 또는 브랜드 맞춤 기획</span><span>• 작업 1~2일 · 수정 1~3회</span></div></div><div class="service-hint">카드를 클릭해 가격 보기</div>
                 </div>
-                <div class="card reveal">
+                <div class="card service-card reveal" tabindex="0" role="button" aria-expanded="false">
                     <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div>
                     <h3 class="card-title">숏폼 영상 제작</h3>
                     <p class="card-desc">기획부터 콘텐츠 제작·운영까지 브랜드에 맞는 SNS 관리를 함께합니다.</p>
+                    <div class="service-details"><div class="service-price">Standard 39,000원 · Deluxe 79,000원 · Premium 149,000원~</div><div class="service-meta"><span>• 영상 1편 기준, 20~60초 제작</span><span>• 컷 편집·색 보정·음악·모션 자막</span><span>• 기획·콘티·전문 편집 포함 여부에 따라 조정</span></div></div><div class="service-hint">카드를 클릭해 가격 보기</div>
                 </div></div>
         </div>
     </section>
@@ -284,20 +323,20 @@
                 <span class="section-tag">PORTFOLIO</span>
                 <h2 class="section-h2">최근 프로젝트</h2>
             </div>
-            <div class="portfolio-grid">
-                <article class="pf-card reveal">
-                    <div class="pf-thumb"><img src="assets/happy-mart.png" alt="행복마트 추석 프로모션 디자인" loading="lazy"></div>
-                    <div class="pf-info"><h4>행복마트 추석 프로모션</h4></div>
-                </article>
-                <article class="pf-card reveal">
-                    <div class="pf-thumb"><img src="assets/mude-mascara.png" alt="mude 마스카라 광고 디자인" loading="lazy"></div>
-                    <div class="pf-info"><h4>뷰티 마스카라 광고 디자인</h4></div>
-                </article>
-                <article class="pf-card reveal">
-                    <div class="pf-thumb"><img src="assets/happy-piano.png" alt="행복 피아노학원 홍보 포스터" loading="lazy"></div>
-                    <div class="pf-info"><h4>행복 피아노학원 홍보 포스터</h4></div>
-                </article>
+            <div class="portfolio-gallery reveal" id="portfolioGallery" aria-label="비즈메이트 AI 포트폴리오 갤러리">
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="행복마트 추석 프로모션" data-desc="시선을 끄는 시즌 프로모션 콘텐츠" data-url="assets/happy-mart.png"><img src="assets/happy-mart.png" alt="행복마트 추석 프로모션 디자인" loading="lazy"><div class="gallery-overlay"><strong>행복마트 추석 프로모션</strong><span>시즌 콘텐츠 디자인</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="mude 마스카라 광고" data-desc="제품의 매력을 살린 뷰티 콘텐츠" data-url="assets/mude-mascara.png"><img src="assets/mude-mascara.png" alt="mude 마스카라 광고 디자인" loading="lazy"><div class="gallery-overlay"><strong>mude 마스카라 광고</strong><span>제품 콘텐츠 디자인</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="행복 피아노학원" data-desc="브랜드 메시지를 담은 홍보 포스터" data-url="assets/happy-piano.png"><img src="assets/happy-piano.png" alt="행복 피아노학원 홍보 포스터" loading="lazy"><div class="gallery-overlay"><strong>행복 피아노학원</strong><span>홍보 포스터 디자인</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="봄 여행 국내 여행 콘텐츠" data-desc="봄 여행지를 소개하는 정보형 포스터" data-url="assets/spring-travel.png"><img src="assets/spring-travel.png" alt="봄 여행 국내 여행 포스터" loading="lazy"><div class="gallery-overlay"><strong>봄 여행 국내 여행 콘텐츠</strong><span>여행 정보형 포스터</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="오늘한상 한우 불고기" data-desc="따뜻한 분위기의 외식 브랜드 메뉴 포스터" data-url="assets/korean-bulgogi.png"><img src="assets/korean-bulgogi.png" alt="오늘한상 한우 불고기 포스터" loading="lazy"><div class="gallery-overlay"><strong>오늘한상 한우 불고기</strong><span>외식 브랜드 메뉴 콘텐츠</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="뷰티 브랜드 광고 모델" data-desc="제품과 모델을 함께 보여주는 브랜드 이미지" data-url="assets/beauty-model.png"><img src="assets/beauty-model.png" alt="뷰티 브랜드 광고 모델 이미지" loading="lazy"><div class="gallery-overlay"><strong>뷰티 브랜드 광고 모델</strong><span>브랜드 이미지 콘텐츠</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="Black Friday Sale" data-desc="강렬한 블랙·레드 컬러의 프로모션 배너" data-url="assets/black-friday.png"><img src="assets/black-friday.png" alt="Black Friday 프로모션 배너" loading="lazy"><div class="gallery-overlay"><strong>Black Friday Sale</strong><span>프로모션 배너 디자인</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="뷰티 모델 클로즈업" data-desc="부드러운 핑크 톤의 뷰티 광고 이미지" data-url="assets/beauty-closeup.png"><img src="assets/beauty-closeup.png" alt="뷰티 모델 클로즈업 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>뷰티 모델 클로즈업</strong><span>광고 모델 콘텐츠</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="향수 브랜드 이미지" data-desc="제품을 중심으로 구성한 감성 광고 비주얼" data-url="assets/beauty-product-scene.png"><img src="assets/beauty-product-scene.png" alt="향수 브랜드 제품 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>향수 브랜드 이미지</strong><span>제품 광고 비주얼</span></div></article>
+                <article class="gallery-card" tabindex="0" data-type="image" data-title="스킨케어 제품 콘텐츠" data-desc="깨끗하고 따뜻한 톤의 제품 연출 이미지" data-url="assets/skincare-products.png"><img src="assets/skincare-products.png" alt="스킨케어 제품 광고 이미지" loading="lazy"><div class="gallery-overlay"><strong>스킨케어 제품 콘텐츠</strong><span>제품 연출 이미지</span></div></article>
+                <div class="gallery-caption">카드를 클릭하면 크게 볼 수 있습니다 · 추후 이미지 카드를 영상으로 교체할 수 있습니다</div>
             </div>
+            <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-label="포트폴리오 크게 보기"><div class="gallery-modal-content"><button class="gallery-close" id="galleryClose" aria-label="닫기">×</button><div id="galleryModalMedia"></div><div class="gallery-modal-info"><h3 id="galleryModalTitle"></h3><p id="galleryModalDesc"></p></div></div></div>
         </div>
     </section>
     
@@ -343,6 +382,37 @@
         entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    document.querySelectorAll('.service-card').forEach(card => {
+        const toggle = () => {
+            const open = card.classList.toggle('is-open');
+            card.setAttribute('aria-expanded', String(open));
+        };
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
+        });
+    });
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryMedia = document.getElementById('galleryModalMedia');
+    const galleryTitle = document.getElementById('galleryModalTitle');
+    const galleryDesc = document.getElementById('galleryModalDesc');
+    const closeGallery = () => { galleryModal.classList.remove('is-open'); galleryMedia.innerHTML = ''; document.body.style.overflow = ''; };
+    document.querySelectorAll('.gallery-card').forEach(card => {
+        const openGallery = () => {
+            const type = card.dataset.type, url = card.dataset.url;
+            galleryTitle.textContent = card.dataset.title || '';
+            galleryDesc.textContent = card.dataset.desc || '';
+            if (type === 'video' && url) galleryMedia.innerHTML = `<video src="${url}" controls autoplay playsinline></video>`;
+            else if (url) galleryMedia.innerHTML = `<img src="${url}" alt="${card.dataset.title || ''}">`;
+            else galleryMedia.innerHTML = '<div style="padding:5rem 1rem;text-align:center;color:#9c6b63">영상 파일을 추가하면 이곳에서 재생됩니다.</div>';
+            galleryModal.classList.add('is-open'); document.body.style.overflow = 'hidden';
+        };
+        card.addEventListener('click', openGallery);
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGallery(); } });
+    });
+    document.getElementById('galleryClose').addEventListener('click', closeGallery);
+    galleryModal.addEventListener('click', e => { if (e.target === galleryModal) closeGallery(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGallery(); });
     </script>
     
     
