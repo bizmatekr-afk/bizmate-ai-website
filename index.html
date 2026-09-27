@@ -58,8 +58,8 @@
         }
         .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.05rem; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
-        .nav-logo svg { display: inline-block; vertical-align: middle; }
-        .brand-logo-image { display: inline-block; width: 32px; height: 32px; object-fit: cover; border-radius: 50%; background: #020611; vertical-align: middle; }
+         .nav-logo svg { display: inline-block; vertical-align: middle; }
+         .brand-mark { width: 28px; height: 28px; display: inline-block; flex: 0 0 auto; border-radius: 50%; object-fit: cover; vertical-align: middle; }
         .nav-links { display: flex; gap: 1.75rem; list-style: none; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.25s; }
         .nav-links a:hover { color: var(--text-main); }
@@ -189,11 +189,12 @@
         .input-group input:focus, .input-group textarea:focus { border-color: var(--primary); }
 
         /* Contact chips (카톡/이메일/SNS) */
-        .contact-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
-        .contact-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.25s; }
+        .contact-chips { display: flex; flex-wrap: nowrap; gap: 0.75rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .contact-chip { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.55rem 0.8rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.25s; white-space: nowrap; }
         .contact-chip:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(var(--primary-rgb),0.15); }
         .footer-contact { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin: 0.85rem 0; }
-        .footer-biz { font-size: 0.78rem; color: var(--text-faint); margin-top: 0.5rem; }
+        .footer-biz { font-size: 0.78rem; color: var(--text-faint); margin-top: 0.5rem; margin-bottom: 0.45rem; }
+        .footer-biz + p { margin-top: 0.45rem; }
 
         /* Footer */
         footer { padding: 3rem 0; border-top: 1px solid var(--border-color); text-align: center; }
@@ -218,12 +219,13 @@
             .portfolio-grid, .test-grid { grid-template-columns: 1fr; }
             .team-grid { grid-template-columns: repeat(2, 1fr); }
             .contact-layout { grid-template-columns: 1fr; }
+            .contact-chips { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
     <nav><div class="container nav-wrap">
-        <a href="#" class="nav-logo"><img class="brand-logo-image" src="assets/bizmate-logo.png" alt=""> <span>비즈메이트 AI</span></a>
+        <a href="#" class="nav-logo"><img class="brand-mark" src="assets/bizmate-logo.png" alt="비즈메이트 AI 로고"> <span>비즈메이트 AI</span></a>
         <ul class="nav-links">
             <li><a href="#services">서비스</a></li>
             <li><a href="#portfolio">포트폴리오</a></li>
@@ -241,6 +243,7 @@
         <div class="hero-actions">
             <a href="#contact" class="btn btn-primary">프로젝트 시작하기</a>
             <a href="#services" class="btn btn-outline">서비스 둘러보기</a>
+            <a href="https://safe-seahorse-baa.notion.site/3e7098ef0bfe80b18bd6d93a648d6a1b?v=1ee098ef0bfe8342bba088d9cfe198b0" target="_blank" rel="noopener" class="btn btn-outline">포트폴리오 보러가기</a>
         </div>
         </div>
         
@@ -308,7 +311,7 @@
                     <span class="section-tag">CONTACT</span>
                     <h3>새로운 프로젝트를<br>시작해볼까요?</h3>
                     <p>당신의 성공을 위한 첫걸음, 비즈메이트 AI와 시작하세요.</p>
-                    <div class="contact-chips"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a><a href="https://www.instagram.com/bizmate.kr/?hl=ko" target="_blank" rel="noopener" class="contact-chip">📷 Instagram</a></div>
+                    <div class="contact-chips"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
                     <div class="contact-widgets">
                         <div class="widget-item"><div class="widget-circle">1</div><div><h5>빠른 조율</h5><p>온라인 즉시 견적 확인 가능</p></div></div>
                         <div class="widget-item"><div class="widget-circle">2</div><div><h5>프리미엄 지향</h5><p>고객 경험 중심 디자인 제공</p></div></div>
@@ -328,8 +331,8 @@
 
     <footer>
         <div class="container">
-            <span class="footer-brand"><img class="brand-logo-image" src="assets/bizmate-logo.png" alt=""> 비즈메이트 AI</span>
-            <div class="footer-contact"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a><a href="https://www.instagram.com/bizmate.kr/?hl=ko" target="_blank" rel="noopener" class="contact-chip">📷 Instagram</a></div>
+            <span class="footer-brand"><img class="brand-mark" src="assets/bizmate-logo.png" alt="비즈메이트 AI 로고"> 비즈메이트 AI</span>
+            <div class="footer-contact"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
             <p class="footer-biz">010-7942-5161&nbsp;&nbsp;·&nbsp;&nbsp;bizmate.kr@gmail.com</p>
             <p>&copy; 2026 비즈메이트 AI. All Rights Reserved.</p>
         </div>
