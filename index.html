@@ -413,7 +413,7 @@
                     <span class="section-tag">CONTACT</span>
                     <h3>새로운 프로젝트를<br>시작해볼까요?</h3>
                     <p>당신의 성공을 위한 첫걸음, 비즈메이트 AI와 시작하세요.</p>
-                    <div class="contact-chips"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
+                    <div class="contact-chips"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bizmate.kr@gmail.com&amp;su=%EB%B9%84%EC%A6%88%EB%A9%94%EC%9D%B4%ED%8A%B8%20AI%20%EC%83%81%EB%8B%B4%20%EB%AC%B8%EC%9D%98" target="_blank" rel="noopener" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
                     <div class="contact-widgets">
                         <div class="widget-item"><div class="widget-circle">1</div><div><h5>빠른 조율</h5><p>온라인 즉시 견적 확인 가능</p></div></div>
                         <div class="widget-item"><div class="widget-circle">2</div><div><h5>프리미엄 지향</h5><p>고객 경험 중심 디자인 제공</p></div></div>
@@ -434,7 +434,7 @@
     <footer>
         <div class="container">
             <span class="footer-brand"><img class="brand-mark" src="assets/bizmate-logo.png" alt="비즈메이트 AI 로고"> 비즈메이트 AI</span>
-            <div class="footer-contact"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="mailto:bizmate.kr@gmail.com" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
+            <div class="footer-contact"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener" class="contact-chip kakao">💬 카카오톡 상담</a><a href="tel:010-7942-5161" class="contact-chip">📞 010-7942-5161</a><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bizmate.kr@gmail.com&amp;su=%EB%B9%84%EC%A6%88%EB%A9%94%EC%9D%B4%ED%8A%B8%20AI%20%EC%83%81%EB%8B%B4%20%EB%AC%B8%EC%9D%98" target="_blank" rel="noopener" class="contact-chip">✉️ bizmate.kr@gmail.com</a></div>
             <p class="footer-biz">010-7942-5161&nbsp;&nbsp;·&nbsp;&nbsp;bizmate.kr@gmail.com</p>
             <p>&copy; 2026 비즈메이트 AI. All Rights Reserved.</p>
         </div>
@@ -475,6 +475,14 @@
         };
         card.addEventListener('click', openGallery);
         card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGallery(); } });
+    });
+    document.querySelectorAll('a.kakao').forEach(link => {
+        link.addEventListener('click', event => {
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                event.preventDefault();
+                window.location.href = link.href;
+            }
+        });
     });
     document.getElementById('galleryClose').addEventListener('click', closeGallery);
     galleryModal.addEventListener('click', e => { if (e.target === galleryModal) closeGallery(); });
