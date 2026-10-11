@@ -221,6 +221,12 @@
             font-family: var(--font-family); font-size: 0.88rem; transition: border-color 0.25s;
         }
         .input-group input:focus, .input-group textarea:focus { border-color: var(--primary); }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+        .input-group select { background: #f8fafc; border: 1px solid var(--border-color); padding: .7rem .9rem; color: var(--text-main); border-radius: var(--border-radius); outline: none; font-family: var(--font-family); font-size: .88rem; }
+        .consent-row { display: flex; align-items: center; gap: .45rem; color: var(--text-secondary); font-size: .75rem; margin-top: .25rem; }
+        .consent-row input { accent-color: var(--primary); }
+        .form-note { text-align: center; color: var(--text-faint); font-size: .72rem; margin-top: .75rem; }
+        .form-note.success { color: #16a34a; }
 
         /* Contact chips (카톡/이메일/SNS) */
         .contact-chips { display: flex; flex-wrap: nowrap; gap: 0.75rem; margin-top: 1.5rem; margin-bottom: 1rem; }
@@ -242,6 +248,7 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .input-row { grid-template-columns: 1fr; gap: 0; }
             .hero h1 { font-size: 2.2rem; }
             /* 좁은 화면에서는 배치를 전부 1단으로 되돌린다. 2단을 우겨넣으면 글자가 세로로 쪼개진다. */
             .hero { display: flex !important; grid-template-columns: none !important; text-align: left; padding-top: 7rem; }
@@ -328,7 +335,7 @@
             <li><a href="#services">서비스</a></li>
             <li><a href="#portfolio">포트폴리오</a></li>
             
-            <li><a href="#contact">문의</a></li>
+            <li><a href="#contact">1:1 문의하기</a></li>
         </ul>
         <a href="#contact" class="btn btn-outline nav-cta">무료 상담</a>
     </div></nav>
@@ -419,14 +426,18 @@
                         <div class="widget-item"><div class="widget-circle">2</div><div><h5>프리미엄 지향</h5><p>고객 경험 중심 디자인 제공</p></div></div>
                     </div>
                 </div>
-                <div class="form-box reveal">
-                    <div class="form-header-row"><span>프로젝트 상담</span><span>STEP 1 / 2</span></div>
-                    <h4 class="form-title">프로젝트 의뢰하기</h4>
-                    <div class="input-group"><label>성함 또는 기업명</label><input type="text" placeholder="홍길동"></div>
-                    <div class="input-group"><label>이메일</label><input type="text" placeholder="example@domain.com"></div>
-                    <div class="input-group"><label>프로젝트 설명</label><textarea placeholder="요청 사항과 디자인 레퍼런스를 적어주세요."></textarea></div>
-                    <button class="btn btn-primary" style="width:100%;margin-top:0.75rem;">의뢰 전송하기</button>
-                </div>
+                <form class="form-box reveal" id="consultationForm">
+                    <div class="form-header-row"><span>무료 상담</span><span>STEP 1 / 2</span></div>
+                    <h4 class="form-title">상담 신청하기</h4>
+                    <div class="input-group"><label for="consultName">성함 또는 기업명 *</label><input id="consultName" name="name" type="text" placeholder="홍길동" required></div>
+                    <div class="input-row"><div class="input-group"><label for="consultPhone">연락처 *</label><input id="consultPhone" name="phone" type="tel" placeholder="010-0000-0000" required></div><div class="input-group"><label for="consultEmail">이메일 *</label><input id="consultEmail" name="email" type="email" placeholder="example@domain.com" required></div></div>
+                    <div class="input-row"><div class="input-group"><label for="consultIndustry">업종</label><input id="consultIndustry" name="industry" type="text" placeholder="예: 온라인 쇼핑몰"></div><div class="input-group"><label for="consultBudget">희망 예산</label><select id="consultBudget" name="budget"><option value="">선택해주세요</option><option>50만원</option><option>100만원 이상</option><option>300만원 이상</option><option>500만원 이상</option><option>상담 후 결정</option></select></div></div>
+                    <div class="input-group"><label for="consultService">희망 서비스</label><input id="consultService" name="service" type="text" placeholder="예: 카드뉴스, 쇼츠 영상, 계정관리"></div>
+                    <div class="input-group"><label for="consultMessage">문의 내용 / 세부 요청사항</label><textarea id="consultMessage" name="message" placeholder="요청 사항과 디자인 레퍼런스를 적어주세요."></textarea></div>
+                    <label class="consent-row"><input type="checkbox" id="consultConsent" required> 개인정보 수집·이용에 동의합니다.</label>
+                    <button class="btn btn-primary" type="submit" style="width:100%;margin-top:0.75rem;">무료 상담 신청하기</button>
+                    <p class="form-note" id="formNote">신청 내용은 bizmate.kr@gmail.com으로 전달됩니다.</p>
+                </form>
             </div>
         </div>
     </section>
@@ -487,6 +498,24 @@
     document.getElementById('galleryClose').addEventListener('click', closeGallery);
     galleryModal.addEventListener('click', e => { if (e.target === galleryModal) closeGallery(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGallery(); });
+    document.getElementById('consultationForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const subject = encodeURIComponent('[비즈메이트 AI] 무료 상담 신청');
+        const body = encodeURIComponent([
+            `성함/기업명: ${data.get('name')}`,
+            `연락처: ${data.get('phone')}`,
+            `이메일: ${data.get('email')}`,
+            `업종: ${data.get('industry') || '-'}`,
+            `희망 예산: ${data.get('budget') || '-'}`,
+            `희망 서비스: ${data.get('service') || '-'}`,
+            `문의 내용: ${data.get('message') || '-'}`
+        ].join('\\n'));
+        window.location.href = `mailto:bizmate.kr@gmail.com?subject=${subject}&body=${body}`;
+        const note = document.getElementById('formNote');
+        note.textContent = '메일 작성창을 열었습니다. 보내기를 누르면 상담 신청이 완료됩니다.';
+        note.classList.add('success');
+    });
     </script>
     
     
