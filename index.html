@@ -338,7 +338,8 @@
         .portfolio-videos .video-actions a:first-child { background: #fee500; color: #222; }
         .portfolio-videos .video-actions a:last-child { background: #12a86b; }
         .modal-video-wrap { position: relative; }
-        .modal-actions { position: absolute; left: 12px; right: 12px; bottom: 14px; display: flex; gap: 8px; }
+        .modal-actions { position: absolute; left: 12px; right: 12px; bottom: 14px; display: none; gap: 8px; }
+        .modal-video-wrap.ready .modal-actions { display: flex; }
         .modal-actions a { flex: 1; padding: 11px 4px; border-radius: 12px; color: #fff; text-align: center; text-decoration: none; font-size: 13px; font-weight: 800; background: rgba(20,20,20,.86); }
         .modal-actions a:first-child { background: #fee500; color: #222; }
         .modal-actions a:last-child { background: #12a86b; }
@@ -542,7 +543,12 @@
             const type = card.dataset.type, url = card.dataset.url;
             galleryTitle.textContent = card.dataset.title || '';
             galleryDesc.textContent = card.dataset.desc || '';
-            if (type === 'video' && url) galleryMedia.innerHTML = `<div class="modal-video-wrap"><video src="${url}" controls autoplay playsinline></video><div class="video-actions modal-actions"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener">💬 카톡 상담</a><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bizemate.kr@gmail.com" target="_blank" rel="noopener">✉️ 메일 상담</a><a href="https://bizmate-ai-website.vercel.app/" target="_blank" rel="noopener">🌐 홈페이지</a></div></div>`;
+            if (type === 'video' && url) {
+                galleryMedia.innerHTML = `<div class="modal-video-wrap"><video src="${url}" controls playsinline preload="auto"></video><div class="video-actions modal-actions"><a href="https://open.kakao.com/o/sNYI5dPi" target="_blank" rel="noopener">💬 카톡 상담</a><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=bizemate.kr@gmail.com" target="_blank" rel="noopener">✉️ 메일 상담</a><a href="https://bizmate-ai-website.vercel.app/" target="_blank" rel="noopener">🌐 홈페이지</a></div></div>`;
+                const modalWrap = galleryMedia.querySelector('.modal-video-wrap');
+                const modalVideo = modalWrap.querySelector('video');
+                modalVideo.addEventListener('loadedmetadata', () => { modalVideo.currentTime = Math.max(0, modalVideo.duration - 0.08); modalWrap.classList.add('ready'); });
+            }
             else if (url) galleryMedia.innerHTML = `<img src="${url}" alt="${card.dataset.title || ''}">`;
             else galleryMedia.innerHTML = '<div style="padding:5rem 1rem;text-align:center;color:#9c6b63">영상 파일을 추가하면 이곳에서 재생됩니다.</div>';
             galleryModal.classList.add('is-open'); document.body.style.overflow = 'hidden';
