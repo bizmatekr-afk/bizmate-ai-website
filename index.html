@@ -337,7 +337,8 @@
         .portfolio-videos .video-actions a { flex: 1; padding: 9px 3px; border-radius: 10px; color: #fff; text-align: center; text-decoration: none; font-size: 11px; font-weight: 800; background: rgba(20,20,20,.82); backdrop-filter: blur(6px); }
         .portfolio-videos .video-actions a:first-child { background: #fee500; color: #222; }
         .portfolio-videos .video-actions a:last-child { background: #12a86b; }
-        .modal-video-wrap { position: relative; }
+        .modal-video-wrap { position: relative; width: min(100%, 430px); margin: 0 auto; }
+        .modal-video-wrap video { display: block; width: 100%; height: auto; }
         .modal-actions { position: absolute; left: 12px; right: 12px; bottom: 14px; display: none; gap: 8px; }
         .modal-video-wrap.ready .modal-actions { display: flex; }
         .modal-actions a { flex: 1; padding: 11px 4px; border-radius: 12px; color: #fff; text-align: center; text-decoration: none; font-size: 13px; font-weight: 800; background: rgba(20,20,20,.86); }
